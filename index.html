@@ -1,52 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Processing Payment...</title>
+<title>Scan QR to Pay</title>
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
 <style>
-    body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; margin: 0; }
-    .container { text-align: center; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    h1 { color: #333; }
-    p { color: #666; }
-    a.button { display: inline-block; padding: 15px 30px; margin-top: 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; font-size: 18px; font-weight: bold; }
-    .loader { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2ff; margin: 0; flex-direction: column; }
+    .container { text-align: center; padding: 30px; background-color: white; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    h1 { color: #333; margin-top: 0; }
+    p { color: #555; font-size: 16px; line-height: 1.5; max-width: 300px; margin: 10px auto; }
+    #qrcode { display: flex; justify-content: center; align-items: center; margin-top: 20px; padding: 10px; border: 1px solid #eee; border-radius: 8px; }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Redirecting to UPI App</h1>
-    <p>You are being redirected to the payment app. If nothing happens, click the button below.</p>
-    <div class="loader"></div>
-    <a id="paymentLink" class="button">Pay Now</a>
+    <h1 id="amount-display"></h1>
+    <p>इस QR कोड का स्क्रीनशॉट लें और<br>Paytm, Google Pay या PhonePe में<br><strong>"Scan from Gallery"</strong> से पेमेंट करें।</p>
+    <div id="qrcode"></div>
 </div>
 
 <script>
-    // यह फंक्शन URL से पैरामीटर निकालेगा
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
     }
 
-    // आपकी नई बिजनेस डिटेल्स अब सीधे कोड में डाल दी गई हैं
-    const upiId = '9128610145@okbizaxis';      // <-- आपकी नई बिजनेस UPI ID
-    const name = 'Tournament Payment';         // <-- टेस्टिंग के लिए नाम
-
-    // URL से सिर्फ अमाउंट और ट्रांजैक्शन नोट निकालें
-    const amount = getQueryParam('am');
+    const upiId = '9128610145@okbizaxis';
+    const name = 'Tournament Payment';
+    const amount = getQuery_Param('am');
     const note = getQueryParam('tn');
 
-    if (amount) { // अब सिर्फ amount का होना ज़रूरी है
-        // UPI लिंक बनाएं
+    if (amount) {
+        document.getElementById('amount-display').innerText = `Pay ₹${amount}`;
         const upiLink = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note || 'Tournament Fee'}`;
-
-        // बटन में लिंक सेट करें
-        document.getElementById('paymentLink').href = upiLink;
-
-        // पेज लोड होते ही अपने आप लिंक खोलने की कोशिश करें
-        window.location.href = upiLink;
+        
+        new QRCode(document.getElementById("qrcode"), {
+            text: upiLink,
+            width: 256,
+            height: 256,
+            correctLevel: QRCode.CorrectLevel.H
+        });
     } else {
-        document.querySelector('.container').innerHTML = "<h1>Error: Amount is missing in the URL.</h1>";
+        document.querySelector('.container').innerHTML = "<h1>Error: Amount is missing in the URL.</h1><p>Please provide an amount in the link.</p>";
     }
 </script>
 
