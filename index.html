@@ -28,9 +28,9 @@
         return urlParams.get(param);
     }
 
-    // आपकी डिटेल्स अब सीधे कोड में डाल दी गई हैं
-    const upiId = 'bgmiheyar@ptyes';      // <-- यहाँ आपकी UPI ID डाल दी है
-    const name = 'GAURAV GOVIND'; // <-- यहाँ आपका नाम डाल दिया है
+    // आपकी नई बिजनेस डिटेल्स अब सीधे कोड में डाल दी गई हैं
+    const upiId = '9128610145@okbizaxis';      // <-- आपकी नई बिजनेस UPI ID
+    const name = 'Tournament Payment';         // <-- टेस्टिंग के लिए नाम
 
     // URL से सिर्फ अमाउंट और ट्रांजैक्शन नोट निकालें
     const amount = getQueryParam('am');
@@ -39,10 +39,10 @@
     if (amount) { // अब सिर्फ amount का होना ज़रूरी है
         // UPI लिंक बनाएं
         const upiLink = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note || 'Tournament Fee'}`;
-        
+
         // बटन में लिंक सेट करें
         document.getElementById('paymentLink').href = upiLink;
-        
+
         // पेज लोड होते ही अपने आप लिंक खोलने की कोशिश करें
         window.location.href = upiLink;
     } else {
