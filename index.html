@@ -27,7 +27,7 @@
 
     const upiId = '9128610145@okbizaxis';
     const name = 'Tournament Payment';
-    const amount = getQuery_Param('am');
+    const amount = getQueryParam('am'); // <-- यहाँ पर गलती ठीक कर दी गई है
     const note = getQueryParam('tn');
 
     if (amount) {
