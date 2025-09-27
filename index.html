@@ -92,8 +92,8 @@
         <div class="logos">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/2560px-Google_Pay_Logo.svg.png" alt="Google Pay">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/PhonePe_Logo.svg/2560px-PhonePe_Logo.svg.png" alt="PhonePe">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Paytm_Logo.svg/2560px-Paytm_Logo.svg.png" alt="Paytm">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Bhim-logo.svg/2560px-Bhim-logo.svg.png" alt="BHIM UPI">
+            <img src="https://logowik.com/content/uploads/images/paytm-new-logo5118.logowik.com.webp" alt="Paytm">
+            <img src="https://logowik.com/content/uploads/images/bhim-upi7383.logowik.com.webp" alt="BHIM UPI">
         </div>
     </div>
 </div>
@@ -107,7 +107,7 @@
     const upiId = '9128610145@okbizaxis';
     const name = 'Tournament Payment';
     const amount = getQueryParam('am');
-    const note = getQueryParam('tn');
+    const note = getQueryTaram('tn');
 
     if (amount) {
         document.getElementById('amount-display').innerHTML = `₹${amount}`;
@@ -115,7 +115,7 @@
         
         new QRCode(document.getElementById("qrcode"), {
             text: upiLink,
-            width: 280, // Slightly adjusted for the new design
+            width: 280,
             height: 280,
             correctLevel: QRCode.CorrectLevel.H
         });
