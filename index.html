@@ -107,7 +107,7 @@
     const upiId = '9128610145@okbizaxis';
     const name = 'Tournament Payment';
     const amount = getQueryParam('am');
-    const note = getQueryTaram('tn');
+    const note = getQueryParam('tn'); // <-- यहाँ पर गलती ठीक कर दी गई है
 
     if (amount) {
         document.getElementById('amount-display').innerHTML = `₹${amount}`;
