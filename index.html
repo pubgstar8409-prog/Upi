@@ -27,7 +27,7 @@
 
     const upiId = '9128610145@okbizaxis';
     const name = 'Tournament Payment';
-    const amount = getQueryParam('am'); // <-- यहाँ पर गलती ठीक कर दी गई है
+    const amount = getQueryParam('am'); 
     const note = getQueryParam('tn');
 
     if (amount) {
@@ -36,8 +36,8 @@
         
         new QRCode(document.getElementById("qrcode"), {
             text: upiLink,
-            width: 5000,
-            height: 5000,
+            width: 400,  // <-- यहाँ साइज़ बड़ा कर दिया है
+            height: 400, // <-- यहाँ साइज़ बड़ा कर दिया है
             correctLevel: QRCode.CorrectLevel.H
         });
     } else {
