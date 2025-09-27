@@ -1,22 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Scan QR to Pay</title>
-<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
-<style>
-    body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2ff; margin: 0; flex-direction: column; }
-    .container { text-align: center; padding: 30px; background-color: white; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-    h1 { color: #333; margin-top: 0; }
-    p { color: #555; font-size: 16px; line-height: 1.5; max-width: 300px; margin: 10px auto; }
-    #qrcode { display: flex; justify-content: center; align-items: center; margin-top: 20px; padding: 10px; border: 1px solid #eee; border-radius: 8px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan to Pay</title>
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .payment-container {
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .header {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .amount-display {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1a73e8;
+            margin: 10px 0;
+        }
+        .instructions {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 20px auto;
+        }
+        #qrcode {
+            margin: 25px auto;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        .footer {
+            margin-top: 30px;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 20px;
+        }
+        .footer p {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 15px;
+        }
+        .logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .logos img {
+            height: 25px;
+            opacity: 0.7;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-    <h1 id="amount-display"></h1>
-    <p>इस QR कोड का स्क्रीनशॉट लें और<br>Paytm, Google Pay या PhonePe में<br><strong>"Scan from Gallery"</strong> से पेमेंट करें।</p>
+<div class="payment-container">
+    <div class="header">Scan & Pay</div>
+    <div id="amount-display" class="amount-display"></div>
     <div id="qrcode"></div>
+    <p class="instructions">
+        इस QR कोड का स्क्रीनशॉट लें और<br>
+        किसी भी UPI ऐप में <strong>"Scan from Gallery"</strong> से पेमेंट करें।
+    </p>
+    <div class="footer">
+        <p>We Accept</p>
+        <div class="logos">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/2560px-Google_Pay_Logo.svg.png" alt="Google Pay">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/PhonePe_Logo.svg/2560px-PhonePe_Logo.svg.png" alt="PhonePe">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Paytm_Logo.svg/2560px-Paytm_Logo.svg.png" alt="Paytm">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Bhim-logo.svg/2560px-Bhim-logo.svg.png" alt="BHIM UPI">
+        </div>
+    </div>
 </div>
 
 <script>
@@ -27,21 +106,21 @@
 
     const upiId = '9128610145@okbizaxis';
     const name = 'Tournament Payment';
-    const amount = getQueryParam('am'); 
+    const amount = getQueryParam('am');
     const note = getQueryParam('tn');
 
     if (amount) {
-        document.getElementById('amount-display').innerText = `Pay ₹${amount}`;
+        document.getElementById('amount-display').innerHTML = `₹${amount}`;
         const upiLink = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR&tn=${note || 'Tournament Fee'}`;
         
         new QRCode(document.getElementById("qrcode"), {
             text: upiLink,
-            width: 400,  // <-- यहाँ साइज़ बड़ा कर दिया है
-            height: 400, // <-- यहाँ साइज़ बड़ा कर दिया है
+            width: 280, // Slightly adjusted for the new design
+            height: 280,
             correctLevel: QRCode.CorrectLevel.H
         });
     } else {
-        document.querySelector('.container').innerHTML = "<h1>Error: Amount is missing in the URL.</h1><p>Please provide an amount in the link.</p>";
+        document.querySelector('.payment-container').innerHTML = "<div class='header'>Error</div><p class='instructions'>Payment amount is missing in the URL. Please use a valid payment link.</p>";
     }
 </script>
 
