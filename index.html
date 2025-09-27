@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scan to Pay</title>
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -18,7 +18,7 @@
         }
         .payment-container {
             text-align: center;
-            padding: 40px 30px;
+            padding: 40px;
             background-color: white;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -73,6 +73,7 @@
         }
         .logos img {
             height: 25px;
+            opacity: 0.7;
         }
     </style>
 </head>
@@ -89,10 +90,10 @@
     <div class="footer">
         <p>We Accept</p>
         <div class="logos">
-            <img src="logos/google-pay.png" alt="Google Pay">
-            <img src="logos/phonepe.png" alt="PhonePe">
-            <img src="logos/paytm.png" alt="Paytm">
-            <img src="logos/bhim.png" alt="BHIM UPI">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/2560px-Google_Pay_Logo.svg.png" alt="Google Pay">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/PhonePe_Logo.svg/2560px-PhonePe_Logo.svg.png" alt="PhonePe">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/2560px-PayPal.svg.png" alt="Paytm">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Bhim-logo.svg/2560px-Bhim-logo.svg.png" alt="BHIM UPI">
         </div>
     </div>
 </div>
@@ -114,7 +115,7 @@
         
         new QRCode(document.getElementById("qrcode"), {
             text: upiLink,
-            width: 280,
+            width: 280, // Slightly adjusted for the new design
             height: 280,
             correctLevel: QRCode.CorrectLevel.H
         });
